@@ -1,17 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   Future<String?> registration({
+    required bool isOrganizer,
+    required String fullName,
     required String email,
     required String password,
   }) async {
+
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return 'Success';
+      String userId = userCredential.user!.uid;
+
+
+      await FirebaseFirestore.instance.collection('Users').doc(userId).set({
+        "isOrganizer": isOrganizer,
+        'name': fullName,
+        'email': email,
+        'createdAt': FieldValue.serverTimestamp(), 
+      });
+      return "User Created";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
@@ -61,5 +74,24 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      print(user.uid);
+      return user.uid;
+    } else {
+      print('No user is currently logged in');
+      return null;
+    }
+  }
+  Future<String> FirebaseSignOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+       return 'User signed out successfully';
+    } catch (e) {
+       return 'Error signing out: $e';
+    }
   }
 }

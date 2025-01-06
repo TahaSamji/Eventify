@@ -132,7 +132,7 @@ class LoginPage extends StatelessWidget {
                               backgroundColor: Colors.green,
                             ),
                           );
-                          Navigator.pushNamed(context, '/products');
+                          Navigator.pushNamed(context, '/home');
                         } catch (e) {
                           print(e);
                           ScaffoldMessenger.of(context).showSnackBar(

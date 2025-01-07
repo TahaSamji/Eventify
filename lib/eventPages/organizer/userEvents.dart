@@ -55,7 +55,7 @@ class MyEvents extends StatelessWidget {
                                     height: 80,
                                     width: 90,
                                     child: Image.asset(
-                                      'assets/concert.png', // Replace with your image path
+                                      'assets/concert.png',
                                       width: 70,
                                       height: 90,
                                       fit: BoxFit.cover,

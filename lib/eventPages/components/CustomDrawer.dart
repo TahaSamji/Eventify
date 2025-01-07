@@ -45,7 +45,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   accountEmail: Text("${user.email}"),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: AssetImage("assets/profileicon.png"), // Add your image path here
+                    backgroundImage: AssetImage("assets/profileicon.png"),
                   ),
                 ),
 
@@ -120,7 +120,7 @@ class CustomDrawer extends StatelessWidget {
                               ? Colors.green
                               : Colors.red,
                         ));// Sign out the user
-                    Navigator.pushNamed(context, '/login'); // Navigate to the login page
+                    Navigator.pushNamed(context, '/login');
                   },
                 ),
 

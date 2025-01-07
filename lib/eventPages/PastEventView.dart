@@ -30,7 +30,7 @@ class PastEventView extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor:
-          Colors.transparent, // Makes the background transparent
+              Colors.transparent, // Makes the background transparent
           elevation: 0,
 
           leading: IconButton(
@@ -110,7 +110,7 @@ class PastEventView extends StatelessWidget {
                                   "${getFormattedDate(event.eventTime)}",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 2,
                                 ),
                                 Text(
@@ -222,7 +222,7 @@ class PastEventView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              onPressed: ()  {
+                              onPressed: () {
                                 showDialog(
                                   context: context,
                                   builder: (context) =>
@@ -242,11 +242,12 @@ class PastEventView extends StatelessWidget {
                               width: 5,
                             ),
                             ElevatedButton(
-                              onPressed: ()  {
+                              onPressed: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => FeedbackPage(event.id))
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FeedbackPage(event.id)));
                               },
                               child: Stack(
                                 alignment: Alignment
@@ -254,7 +255,7 @@ class PastEventView extends StatelessWidget {
                                 children: [
                                   Align(
                                     alignment:
-                                    Alignment.center, // Center the text
+                                        Alignment.center, // Center the text
                                     child: Text(
                                       "View Reviews",
                                       style: TextStyle(color: Colors.white),

@@ -1,9 +1,6 @@
 import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/eventPages/eventView.dart';
-import 'package:eventify/eventPages/organizer/modals/deleteConfirmationModal.dart';
-import 'package:eventify/eventPages/organizer/modals/editEventModal.dart';
-import 'package:eventify/service/FirestoreService.dart';
-import 'package:eventify/service/authService.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +29,7 @@ class MyInterestEvents extends StatelessWidget {
                     return const Center(child: Text('No events available'));
                   }
 
-                  return Expanded( // Wrap ListView.builder in Expanded
+                  return Expanded(
                     child: ListView.builder(
                       itemCount: events.length,
                       itemBuilder: (context, index) {
@@ -55,7 +52,7 @@ class MyInterestEvents extends StatelessWidget {
                                     height: 80,
                                     width: 90,
                                     child: Image.asset(
-                                      'assets/concert.png', // Replace with your image path
+                                      'assets/concert.png',
                                       width: 70,
                                       height: 90,
                                       fit: BoxFit.cover,

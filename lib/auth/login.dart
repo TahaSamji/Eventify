@@ -60,6 +60,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
+                      obscureText: true,
                       controller: passwordController,
                       decoration: InputDecoration(
                         filled: true,
@@ -99,7 +100,7 @@ class LoginPage extends StatelessWidget {
                         fixedSize: const Size(150, 30),
                       ),
                       child: const Text(
-                        "Sign In",
+                        "Login",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -125,11 +126,13 @@ class LoginPage extends StatelessWidget {
                       ),
                       onPressed: () async {
                         try {
-                          await authService.signInWithGoogle();
+                          String? response = await authService.signInWithGoogle();
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Logged in with Google!'),
-                              backgroundColor: Colors.green,
+                            SnackBar(
+                              content: Text(response ?? 'An error occurred'),
+                              backgroundColor: response == "Google Sign-In Success"
+                                  ? Colors.green
+                                  : Colors.red,
                             ),
                           );
                           Navigator.pushNamed(context, '/home');

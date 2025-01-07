@@ -1,20 +1,20 @@
 import 'package:eventify/bloc/bottomNavBloc.dart';
 import 'package:eventify/bloc/eventBloc.dart';
+import 'package:eventify/eventPages/ProfileScreen.dart';
 import 'package:eventify/eventPages/components/CustomDrawer.dart';
 import 'package:eventify/eventPages/eventPage.dart';
 import 'package:eventify/service/FirestoreService.dart';
+import 'package:eventify/service/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    EventPage(),
-    Text('Profile',
-        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('Settings',
-        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const EventPage(),
+    ProfileScreen(),
+
   ];
 
   @override
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: BlocBuilder<BottomNavBloc, BottomNavState>(
         builder: (context, state) {
           if (state is PageChanged) {
@@ -58,19 +58,23 @@ class HomePage extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.cases_outlined),
                   backgroundColor: Colors.black,
-                  label: "Events"),
+                  label: "Home"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline), label: "Profile"),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                label: "Settings",
+                icon: Icon(Icons.search),
+                label: "Search Events",
               ),
             ],
             currentIndex: state is PageChanged ? state.currentIndex : 0,
             selectedItemColor: const Color.fromARGB(255, 82, 63, 255),
             iconSize: 30,
             onTap: (index) {
-              context.read<BottomNavBloc>().add(ChangePage(index));
+              if (index == 2) {
+                Navigator.pushNamed(context, '/allEvents');
+              }else {
+                context.read<BottomNavBloc>().add(ChangePage(index));
+              }
             },
           );
         },

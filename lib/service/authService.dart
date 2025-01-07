@@ -60,32 +60,69 @@ class AuthService {
       return e.toString();
     }
   }
+  Future<String?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
-  Future<UserCredential> signInWithGoogle() async {
-    //    final GoogleSignIn googleSignIn = GoogleSignIn(
-    //   clientId: '', // Replace with your actual client ID
-    // );
-    //    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-    //
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // Check if the user document already exists
+        final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          // Create a new user document
+          await FirebaseFirestore.instance.collection('Users').doc(user.uid).set({
+            "isOrganizer": false,  // Default value, you can change as needed
+            'name': user.displayName ?? 'No Name',
+            'email': user.email,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+      }
+
+      return "Google Sign-In Success";
+    } catch (e) {
+      print('Error signing in with Google: $e');
+      return 'Error signing in with Google';
+    }
   }
+  // Future<UserCredential> signInWithGoogle() async {
+  //   //    final GoogleSignIn googleSignIn = GoogleSignIn(
+  //   //   clientId: '', // Replace with your actual client ID
+  //   // );
+  //   //    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  //   //
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
+  //   return await FirebaseAuth.instance.signInWithCredential(credential);
+  // }
 
   String? getCurrentUserId() {
     User? user = FirebaseAuth.instance.currentUser;
+
     if (user != null) {
       print(user.uid);
+
       return user.uid;
     } else {
       print('No user is currently logged in');
       return null;
     }
   }
+
+
+
   Future<String> FirebaseSignOut() async {
     try {
       await FirebaseAuth.instance.signOut();

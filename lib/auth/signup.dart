@@ -15,18 +15,18 @@ class SignUp extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    return  Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: Form(
-        key: formKey,
-        child: Column(
+            child: Form(
+          key: formKey,
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 8),
               SizedBox(
-                width: 220,
-                height: 200,
+                width: 200,
+                height: 155,
                 child: Image.asset(
                   'assets/logo.PNG',
                   fit: BoxFit.cover,
@@ -80,6 +80,7 @@ class SignUp extends StatelessWidget {
 
                     const SizedBox(height: 8),
                     TextField(
+                      obscureText: true,
                       controller: passwordController,
                       decoration: InputDecoration(
                         filled: true,
@@ -100,7 +101,9 @@ class SignUp extends StatelessWidget {
                           title: const Text('Sign up as Organizer'),
                           value: state.isOrganizer,
                           onChanged: (value) {
-                            context.read<RoleSelectionBloc>().add(ToggleRole(value!));
+                            context
+                                .read<RoleSelectionBloc>()
+                                .add(ToggleRole(value!));
                           },
                         );
                       },
@@ -108,13 +111,15 @@ class SignUp extends StatelessWidget {
                     const SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () async {
-
                         if (formKey.currentState?.validate() ?? false) {
-                          final isOrganizer = context.read<RoleSelectionBloc>().state.isOrganizer;
+                          final isOrganizer = context
+                              .read<RoleSelectionBloc>()
+                              .state
+                              .isOrganizer;
                           final String? response =
                               await authService.registration(
-                                isOrganizer : isOrganizer,
-                                fullName: nameController.text.trim(),
+                            isOrganizer: isOrganizer,
+                            fullName: nameController.text.trim(),
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
                           );

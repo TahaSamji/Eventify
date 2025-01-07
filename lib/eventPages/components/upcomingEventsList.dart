@@ -1,4 +1,5 @@
 import 'package:eventify/bloc/eventBloc.dart';
+import 'package:eventify/eventPages/eventView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,9 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UpcomingEvents extends StatelessWidget {
   const UpcomingEvents({super.key});
 
+
   @override
   Widget build(BuildContext context) {
-    context.read<EventBloc>().add(FetchEvents());
+    context.read<EventBloc>().add(FetchUpcomingEvents());
 
     return  BlocBuilder<EventBloc, EventState>(
       builder: (context, state) {
@@ -28,7 +30,15 @@ class UpcomingEvents extends StatelessWidget {
               itemCount: events.length,
               itemBuilder: (context, index) {
                 final event = events[index];
-                return Card(
+                return InkWell(onTap:  () {
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventView(event),
+                    ),
+                  );
+                },child:  Card(
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: SizedBox(
                     width: 190,
@@ -48,6 +58,9 @@ class UpcomingEvents extends StatelessWidget {
                             )),
                         const SizedBox(height: 8),
                         Text(
+                          overflow: TextOverflow.ellipsis
+                          ,
+                          maxLines: 1,
                           event.eventName,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
@@ -56,13 +69,13 @@ class UpcomingEvents extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '\$${event.ticketPrice.toStringAsFixed(2)}',
+                          '${event.ticketPrice.toStringAsFixed(2)}Rs',
                           style: const TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
                   ),
-                );
+                ));
               },
             ),
           );

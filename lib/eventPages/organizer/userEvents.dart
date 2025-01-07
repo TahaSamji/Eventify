@@ -1,6 +1,8 @@
 import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/eventPages/organizer/modals/deleteConfirmationModal.dart';
 import 'package:eventify/eventPages/organizer/modals/editEventModal.dart';
+import 'package:eventify/service/FirestoreService.dart';
+import 'package:eventify/service/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +12,8 @@ class MyEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<EventBloc>().add(FetchEvents());
+  AuthService authService = new AuthService();
+    context.read<EventBloc>().add(FetchMyEvents(authService.getCurrentUserId()));
 
     return Scaffold(
       body: Padding(
@@ -59,14 +62,14 @@ class MyEvents extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 5),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       _formatDateTime(event.eventTime),
                                       style: const TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 13,
                                         color: Colors.blue,
                                       ),
                                     ),
@@ -79,8 +82,10 @@ class MyEvents extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const Spacer(),
-                                IconButton(
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [IconButton(
                                   onPressed: () {
                                     showDialog(
                                       context: context,
@@ -91,21 +96,23 @@ class MyEvents extends StatelessWidget {
                                   icon: const Icon(
                                     Icons.edit,
                                     color: Colors.blue,
+                                    size: 20,
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          DeleteConfirmationModal(event.id),
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            DeleteConfirmationModal(event.id),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
+                                  ),],)
+
                               ],
                             ),
                           ),

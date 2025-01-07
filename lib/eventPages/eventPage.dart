@@ -1,6 +1,7 @@
 import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/eventPages/components/trendingEventList.dart';
 import 'package:eventify/eventPages/components/upcomingEventsList.dart';
+import 'package:eventify/service/FirestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,43 +18,72 @@ class EventPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Trending Events",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    "View All",
-                    style: TextStyle(color: Colors.blue),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/allEvents');
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text("View All"),
+                        SizedBox(width: 4), // Adds some spacing between the text and the icon
+                        Icon(Icons.arrow_forward, size: 16), // Adjust the size as needed
+                      ],
+                    ),
                   ),
+
+
+
                 ],
               ),
-              const SizedBox(height: 10),
-              const TrendingEvents(),
+              const SizedBox(height: 5),
+              BlocProvider(
+                create: (context) => EventBloc(FirestoreService())..add(FetchTrendingEvents()),
+                child: TrendingEvents(),
+              ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Upcoming Events",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    "View All",
-                    style: TextStyle(color: Colors.blue),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/allEvents');
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text("View All"),
+                        SizedBox(width: 4), // Adds some spacing between the text and the icon
+                        Icon(Icons.arrow_forward, size: 16), // Adjust the size as needed
+                      ],
+                    ),
                   ),
+
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              UpcomingEvents(),
+              BlocProvider(
+                create: (context) => EventBloc(FirestoreService())..add(FetchUpcomingEvents()),
+                child: UpcomingEvents(),
+              ),
               SizedBox(
-                height: 30,
+                height:15
+                ,
               ),
               ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(13)),
@@ -100,7 +130,7 @@ class EventPage extends StatelessWidget {
                             ),
                             SizedBox(
                               width: 159,
-                              height: 120,
+                              height: 110,
                               child: Image.asset(
                                 'assets/inviteprop.png',
                                 fit: BoxFit.cover,

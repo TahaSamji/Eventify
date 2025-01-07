@@ -140,7 +140,8 @@ class EditEventModal extends StatelessWidget {
                 ticketPrice: ticketPrice,
                 description: description,
                 location:location,
-                eventTime: dateTime
+                eventTime: dateTime,
+                organizerName: event.organizerName
 
             );
 

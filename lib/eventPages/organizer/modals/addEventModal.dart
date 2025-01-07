@@ -139,7 +139,9 @@ class AddEventModal extends StatelessWidget {
               ticketPrice: ticketPrice,
               description: description,
                 location:location,
-              eventTime: dateTime
+              eventTime: dateTime,
+              organizerName: "organizer"
+
 
             );
 

@@ -1,10 +1,15 @@
+import 'package:eventify/models/Event.dart';
+import 'package:eventify/service/FirestoreService.dart';
 import 'package:flutter/material.dart';
 
 class PaymentView extends StatelessWidget {
-  const PaymentView({Key? key}) : super(key: key);
+   final Events event;
+   final String name;
+   const PaymentView(this.event,this.name,{super.key});
 
   @override
   Widget build(BuildContext context) {
+    FirestoreService firestoreService = new FirestoreService();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Checkout"),
@@ -52,9 +57,9 @@ class PaymentView extends StatelessWidget {
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "John Doe",
-                    style: TextStyle(
+                   Text(
+                    name,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -133,14 +138,14 @@ class PaymentView extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children:  [
+                  const Text(
                     "Ticket Price",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "\$120",
-                    style: TextStyle(
+                    "${event.ticketPrice}Rs",
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -154,8 +159,16 @@ class PaymentView extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  // Payment logic here
+                onPressed: () async {
+                String response =  await firestoreService.paymentProcess(event.id);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(response ?? 'An error occurred'),
+                    backgroundColor: response == "Payment Done Successfully"
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

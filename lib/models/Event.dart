@@ -8,6 +8,7 @@ class Events {
   final String description;
   final String location;
   final DateTime eventTime;
+  final String organizerName;
 
 
   Events({
@@ -17,7 +18,7 @@ class Events {
     required this.description,
     required this.location,
     required this.eventTime,
-
+ required this.organizerName
 
 
 
@@ -33,6 +34,7 @@ class Events {
       eventTime: (json['eventTime'] is Timestamp)
           ? (json['eventTime'] as Timestamp).toDate()
           : DateTime.parse(json['eventTime'] ?? DateTime.now().toIso8601String()),
+        organizerName: json['organizerName'] ?? 'organizer'
     );
   }
   Map<String, dynamic> toJson() {
@@ -43,6 +45,7 @@ class Events {
       'description': description,
       'location': location,
       'eventTime': eventTime.toIso8601String(),
+      'organizerName' : organizerName
     };
   }
 

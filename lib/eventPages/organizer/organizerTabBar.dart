@@ -1,10 +1,12 @@
 import 'package:eventify/eventPages/organizer/modals/addEventModal.dart';
+import 'package:eventify/eventPages/organizer/organizerAttendedEvents.dart';
+import 'package:eventify/eventPages/organizer/organizerPayedEvents.dart';
 import 'package:eventify/eventPages/organizer/userEvents.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Tabbar extends StatelessWidget {
-  const Tabbar({super.key});
+class OrganizerTabBar extends StatelessWidget {
+  const OrganizerTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +14,9 @@ class Tabbar extends StatelessWidget {
       length: 3, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(onPressed: (){
+            Navigator.pushNamed(context, '/home');
+          }, icon: Icon(Icons.arrow_back,color: Colors.black,)),
           title: Text('My Events'),
           actions: <Widget>[
             ElevatedButton(
@@ -30,19 +35,19 @@ class Tabbar extends StatelessWidget {
             ,
             SizedBox(width: 10,)
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'My Events'),
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Past Tickets'),
+              Tab(text: 'Going'),
+              Tab(text: 'Past Events'),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             MyEvents(),
-            MyEvents(),
-            Center(child: Text('Past Tickets')),
+            OrganizerPayedEvents(),
+           OrganizerAttendedEventsList(),
           ],
         ),
       ),

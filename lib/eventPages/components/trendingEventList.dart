@@ -7,9 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class TrendingEvents extends StatelessWidget {
   const TrendingEvents({super.key});
 
+
   @override
   Widget build(BuildContext context) {
-    context.read<EventBloc>().add(FetchEvents());
+    context.read<EventBloc>().add(FetchTrendingEvents());
 
     return  BlocBuilder<EventBloc, EventState>(
       builder: (context, state) {
@@ -30,6 +31,7 @@ class TrendingEvents extends StatelessWidget {
               itemBuilder: (context, index) {
                 final event = events[index];
                 return InkWell(onTap:  () {
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -67,7 +69,7 @@ class TrendingEvents extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '\$${event.ticketPrice.toStringAsFixed(2)}',
+                          '${event.ticketPrice.toStringAsFixed(2)}Rs',
                           style: const TextStyle(color: Colors.grey),
                         ),
                       ],

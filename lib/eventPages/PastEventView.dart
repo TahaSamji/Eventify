@@ -1,5 +1,7 @@
 import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/eventPages/components/ticketPaymentView.dart';
+import 'package:eventify/eventPages/feedbackPages/modals/ViewFeedBackScreen.dart';
+import 'package:eventify/eventPages/feedbackPages/modals/addFeedbackModal.dart';
 import 'package:eventify/models/Event.dart';
 import 'package:eventify/service/FirestoreService.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class EventView extends StatelessWidget {
+class PastEventView extends StatelessWidget {
   final Events event;
-  const EventView(this.event, {super.key});
+  const PastEventView(this.event, {super.key});
 
   String getFormattedDate(DateTime eventTime) {
     return DateFormat('d MMMM, yyyy').format(eventTime);
@@ -28,7 +30,7 @@ class EventView extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor:
-              Colors.transparent, // Makes the background transparent
+          Colors.transparent, // Makes the background transparent
           elevation: 0,
 
           leading: IconButton(
@@ -220,42 +222,30 @@ class EventView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              onPressed: () async {
-                                String response = await firestoreService
-                                    .addtoInterested(event.id);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        Text(response ?? 'An error occurred'),
-                                    backgroundColor: response ==
-                                            "Interest Added Successfully"
-                                        ? Colors.green
-                                        : Colors.red,
-                                  ),
+                              onPressed: ()  {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      AddFeedBackModal(event.id),
                                 );
                               },
                               child: Text(
-                                "Interested",
+                                "Add Review",
                                 style: TextStyle(color: Colors.white),
                               ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
-                                fixedSize: const Size(120, 30),
+                                fixedSize: const Size(130, 30),
                               ),
                             ),
                             SizedBox(
                               width: 5,
                             ),
                             ElevatedButton(
-                              onPressed: () async {
-                                String name =
-                                    await firestoreService.getUserName();
-                                Navigator.pushReplacement(
+                              onPressed: ()  {
+                                Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PaymentView(event, name),
-                                  ),
+                                  MaterialPageRoute(builder: (context) => FeedbackPage(event.id))
                                 );
                               },
                               child: Stack(
@@ -264,9 +254,9 @@ class EventView extends StatelessWidget {
                                 children: [
                                   Align(
                                     alignment:
-                                        Alignment.center, // Center the text
+                                    Alignment.center, // Center the text
                                     child: Text(
-                                      "Buy",
+                                      "View Reviews",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -281,7 +271,7 @@ class EventView extends StatelessWidget {
                               ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
-                                fixedSize: const Size(120, 30),
+                                fixedSize: const Size(130, 40),
                               ),
                             )
                           ])

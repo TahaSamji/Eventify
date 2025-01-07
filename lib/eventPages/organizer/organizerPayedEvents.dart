@@ -1,69 +1,21 @@
 import 'package:eventify/bloc/eventBloc.dart';
-import 'package:eventify/eventPages/eventView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
+class OrganizerPayedEvents extends StatelessWidget {
+  const OrganizerPayedEvents({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
-    context.read<EventBloc>().add(FetchEvents());
-
+    context.read<EventBloc>().add(FetchBoughtEvents());
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.black), // Adjust icon color as needed
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-        ),
-        title: Text(
-          "Search",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.filter_alt, color: Colors.blue),
-            onPressed: () {
-              // Handle filter action
-            },
-          ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search Field
-            TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: Colors.blue),
-                hintText: "Search...",
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  context.read<EventBloc>().add(FetchSearchedEvents(value));
-                } else {
-                  context.read<EventBloc>().add(FetchEvents());
-                }
-              },
-            ),
-            SizedBox(height: 20),
             BlocBuilder<EventBloc, EventState>(
               builder: (context, state) {
                 if (state is EventLoading) {
@@ -72,10 +24,10 @@ class SearchPage extends StatelessWidget {
                   final events = state.events;
 
                   if (events.isEmpty) {
-                    return const Center(child: Text('No events found'));
+                    return const Center(child: Text('No events available'));
                   }
 
-                  return Expanded(
+                  return Expanded( // Wrap ListView.builder in Expanded
                     child: ListView.builder(
                       itemCount: events.length,
                       itemBuilder: (context, index) {
@@ -98,7 +50,7 @@ class SearchPage extends StatelessWidget {
                                     height: 80,
                                     width: 90,
                                     child: Image.asset(
-                                      'assets/concert.png',
+                                      'assets/concert.png', // Replace with your image path
                                       width: 70,
                                       height: 90,
                                       fit: BoxFit.cover,
@@ -125,17 +77,7 @@ class SearchPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
-                                IconButton(onPressed: (){
 
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EventView(event),
-                                    ),
-
-                                  );
-                                }, icon: Icon(Icons.remove_red_eye_outlined))
                               ],
                             ),
                           ),
@@ -157,6 +99,7 @@ class SearchPage extends StatelessWidget {
       ),
     );
   }
+
 
   String _formatDateTime(DateTime dateTime) {
     String daySuffix(int day) {

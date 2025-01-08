@@ -73,6 +73,22 @@ void main() {
       expect(updatedEvents[0].eventName, 'Updated Music Concert');
       expect(updatedEvents[0].ticketPrice, 60.0);
       expect(updatedEvents[0].location, 'Updated Central Park');
+
+
+      Events event =  Events(
+          id: doc1.id, // Pass the event ID
+          eventName: 'Updated Music Concert', // New name
+          ticketPrice: 60.0, // Updated ticket price
+          description: 'An updated live music concert event.',
+          location: 'Updated Central Park',
+          eventTime: DateTime.now(),
+          organizerName: "Test"
+        // Updated time
+      );
+
+      final message = await firestoreService.createEvent(event);
+      expect(message, 'Event Created Successfully');
+
     });
   });
 

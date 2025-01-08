@@ -42,4 +42,19 @@ class MockFirestoreService {
       return 'Error updating event: $e';
     }
   }
+  Future<String> createEvent(Events event) async {
+
+
+    await firestore.collection("events").add({
+      'eventName': event.eventName,
+      'ticketPrice': event.ticketPrice,
+      "organizerId": "organizerId",
+      "description": event.description,
+      "organizerName": "organizerName",
+      "location": event.location,
+      "eventTime": event.eventTime,
+      "interestCount": 0
+    });
+    return "Event Created Successfully";
+  }
 }

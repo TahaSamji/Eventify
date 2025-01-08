@@ -6,7 +6,6 @@ import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/bloc/feedbackbloc.dart';
 import 'package:eventify/bloc/roleChangeBloc.dart';
 import 'package:eventify/bloc/userBloc.dart';
-import 'package:eventify/eventPages/eventView.dart';
 import 'package:eventify/eventPages/homePage.dart';
 import 'package:eventify/eventPages/searchEvent.dart';
 import 'package:eventify/service/FirestoreService.dart';

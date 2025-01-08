@@ -62,6 +62,7 @@ class AuthService {
   }
   Future<String?> signInWithGoogle() async {
     try {
+
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -73,13 +74,12 @@ class AuthService {
       final User? user = userCredential.user;
 
       if (user != null) {
-        // Check if the user document already exists
         final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
 
         if (!userDoc.exists) {
-          // Create a new user document
+
           await FirebaseFirestore.instance.collection('Users').doc(user.uid).set({
-            "isOrganizer": false,  // Default value, you can change as needed
+            "isOrganizer": true,
             'name': user.displayName ?? 'No Name',
             'email': user.email,
             'createdAt': FieldValue.serverTimestamp(),
@@ -94,10 +94,10 @@ class AuthService {
     }
   }
   // Future<UserCredential> signInWithGoogle() async {
-  //   //    final GoogleSignIn googleSignIn = GoogleSignIn(
-  //   //   clientId: '', // Replace with your actual client ID
-  //   // );
-  //   //    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  //      final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     clientId: '986741810915-7kdotp3n4peckt44clbkusb9m1frt16n.apps.googleusercontent.com', // Replace with your actual client ID
+  //   );
+  //      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
   //   //
   //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
   //   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;

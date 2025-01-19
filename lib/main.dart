@@ -15,7 +15,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  // options: const FirebaseOptions(
+  //     apiKey: "AIzaSyCQmnwHIa7yd9azx_OEqRmjgdiu8Eqsqf4",
+  //     authDomain: "app-dev-project-9e75f.firebaseapp.com",
+  //     projectId: "app-dev-project-9e75f",
+  //     storageBucket: "app-dev-project-9e75f.firebasestorage.app",
+  //     messagingSenderId: "597945776841",
+  //     appId: "1:597945776841:web:64898a876c4d2d104d6b18",
+  //     measurementId: "G-CPN63D6EYP")
   await Firebase.initializeApp();
 
   runApp(MultiBlocProvider(providers: [

@@ -6,8 +6,7 @@ import 'package:eventify/bloc/eventBloc.dart';
 import 'package:eventify/bloc/feedbackbloc.dart';
 import 'package:eventify/bloc/roleChangeBloc.dart';
 import 'package:eventify/bloc/userBloc.dart';
-import 'package:eventify/eventPages/eventPage.dart';
-import 'package:eventify/eventPages/homePage.dart';
+
 import 'package:eventify/service/FirestoreService.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

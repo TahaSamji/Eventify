@@ -135,7 +135,10 @@ class LoginPage extends StatelessWidget {
                                   : Colors.red,
                             ),
                           );
-                          Navigator.pushNamed(context, '/home');
+                          if (response == "Google Sign-In Success") {
+                            Navigator.pushNamed(context, '/home');
+
+                          }
                         } catch (e) {
                           print(e);
                           ScaffoldMessenger.of(context).showSnackBar(

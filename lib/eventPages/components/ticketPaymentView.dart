@@ -144,7 +144,7 @@ class PaymentView extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${event.ticketPrice}Rs",
+                    "${event.ticketPrice.toStringAsFixed(2)} Rs",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

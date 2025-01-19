@@ -13,18 +13,19 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-  group('authScreen Widget Tests', () {
+  group
+    ('authScreen Widget Tests', () {
     testWidgets('LoginScreen renders correctly', (WidgetTester tester) async {
       // Build the widget
       await tester.pumpWidget(
         MaterialApp(
-          home: LoginPage(), // Ensure LoginPage is a valid widget
+          home: LoginPage(),
         ),
       );
 
-      // Verify the widgets are present
+
       expect(find.text('Sign In'), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsOneWidget); // Login button
+      expect(find.byType(ElevatedButton), findsOneWidget);
       expect(find.text("Dont have an account?"), findsOneWidget);
     });
     testWidgets('SignUp renders correctly', (WidgetTester tester) async {

@@ -12,8 +12,10 @@ import 'package:eventify/service/FirestoreService.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
 
-void main(){
+void main() async {
+  await loadAppFonts();
   testWidgets("golden tests", (WidgetTester tester)async{
     await tester.pumpWidget( MaterialApp(
       home: MaterialApp(

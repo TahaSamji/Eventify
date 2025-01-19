@@ -69,7 +69,7 @@ class TrendingEvents extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${event.ticketPrice.toStringAsFixed(2)}Rs',
+                          '${event.ticketPrice.toStringAsFixed(2)} Rs',
                           style: const TextStyle(color: Colors.grey),
                         ),
                       ],

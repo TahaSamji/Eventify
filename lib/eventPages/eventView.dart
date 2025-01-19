@@ -70,13 +70,13 @@ class EventView extends StatelessWidget {
                             Text(
                               "${event.eventName}",
                               style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.w800),
+                                  fontSize: 20, fontWeight: FontWeight.w800),
                             ),
                             Spacer(),
                             Text(
-                              "${event.ticketPrice} Rs",
+                              "${event.ticketPrice.toStringAsFixed(2)} Rs",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w800,
                                   color: CupertinoColors.activeBlue),
                             ),
@@ -216,6 +216,7 @@ class EventView extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
+                      Spacer(),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
